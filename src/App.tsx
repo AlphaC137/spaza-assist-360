@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Header } from "./components/Header";
 import { Navigation } from "./components/Navigation";
 import Index from "./pages/Index";
+import Registration from "./pages/Registration";
 import { LanguageProvider } from "./contexts/LanguageContext";
 
 const queryClient = new QueryClient();
@@ -23,6 +24,7 @@ const App = () => (
                 <div className="flex-1">
                   <Routes>
                     <Route path="/" element={<Index />} />
+                    <Route path="/registration" element={<Registration />} />
                   </Routes>
                 </div>
               </div>

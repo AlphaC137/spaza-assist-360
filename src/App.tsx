@@ -6,29 +6,32 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Header } from "./components/Header";
 import { Navigation } from "./components/Navigation";
 import Index from "./pages/Index";
+import { LanguageProvider } from "./contexts/LanguageContext";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <div className="min-h-screen flex flex-col">
-        <Header />
-        <main className="flex-1">
-          <BrowserRouter>
-            <div className="flex">
-              <Navigation />
-              <div className="flex-1">
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                </Routes>
+      <LanguageProvider>
+        <div className="min-h-screen flex flex-col">
+          <Header />
+          <main className="flex-1">
+            <BrowserRouter>
+              <div className="flex">
+                <Navigation />
+                <div className="flex-1">
+                  <Routes>
+                    <Route path="/" element={<Index />} />
+                  </Routes>
+                </div>
               </div>
-            </div>
-          </BrowserRouter>
-        </main>
-      </div>
-      <Toaster />
-      <Sonner />
+            </BrowserRouter>
+          </main>
+        </div>
+        <Toaster />
+        <Sonner />
+      </LanguageProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

@@ -1,6 +1,6 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Globe } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const languages = [
   { code: "en", name: "English" },
@@ -9,7 +9,7 @@ const languages = [
 ];
 
 export function LanguageSelector() {
-  const [currentLang, setCurrentLang] = useState("en");
+  const { currentLanguage, setLanguage } = useLanguage();
 
   return (
     <div className="flex items-center gap-2">
@@ -18,9 +18,9 @@ export function LanguageSelector() {
         {languages.map((lang) => (
           <Button
             key={lang.code}
-            variant={currentLang === lang.code ? "default" : "ghost"}
+            variant={currentLanguage === lang.code ? "default" : "ghost"}
             size="sm"
-            onClick={() => setCurrentLang(lang.code)}
+            onClick={() => setLanguage(lang.code)}
             className="text-sm"
           >
             {lang.name}

@@ -7,6 +7,7 @@ import { Header } from "./components/Header";
 import { Navigation } from "./components/Navigation";
 import Index from "./pages/Index";
 import Registration from "./pages/Registration";
+import Resources from "./pages/Resources";
 import { LanguageProvider } from "./contexts/LanguageContext";
 
 const queryClient = new QueryClient();
@@ -25,6 +26,7 @@ const App = () => (
                   <Routes>
                     <Route path="/" element={<Index />} />
                     <Route path="/registration" element={<Registration />} />
+                    <Route path="/resources" element={<Resources />} />
                   </Routes>
                 </div>
               </div>

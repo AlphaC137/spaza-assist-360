@@ -15,9 +15,18 @@ import {
   BarChart,
   Bar
 } from 'recharts';
-import { ChartContainer, ChartTooltip } from "@/components/ui/chart";
+import { ChartContainer } from "@/components/ui/chart";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
-// Mock data - in a real app this would come from your backend
+// Mock data for charts
 const monthlyData = [
   { name: 'Jan', profit: 4000, sales: 2400 },
   { name: 'Feb', profit: 3000, sales: 1398 },
@@ -25,6 +34,15 @@ const monthlyData = [
   { name: 'Apr', profit: 2780, sales: 3908 },
   { name: 'May', profit: 1890, sales: 4800 },
   { name: 'Jun', profit: 2390, sales: 3800 },
+];
+
+// Mock data for inventory
+const inventoryData = [
+  { id: 1, name: "Bread", quantity: 45, costPrice: 15.00, sellingPrice: 18.00 },
+  { id: 2, name: "Milk", quantity: 30, costPrice: 20.00, sellingPrice: 25.00 },
+  { id: 3, name: "Sugar", quantity: 100, costPrice: 18.00, sellingPrice: 22.00 },
+  { id: 4, name: "Rice", quantity: 50, costPrice: 45.00, sellingPrice: 55.00 },
+  { id: 5, name: "Cooking Oil", quantity: 25, costPrice: 35.00, sellingPrice: 42.00 },
 ];
 
 interface InventoryForm {
@@ -89,6 +107,36 @@ const Analytics = () => {
           </div>
           <Button type="submit" className="w-full">Add Item</Button>
         </form>
+      </Card>
+
+      {/* Current Inventory Table */}
+      <Card className="p-4">
+        <h2 className="text-xl font-semibold mb-4">Current Inventory</h2>
+        <Table>
+          <TableCaption>A list of your current inventory items.</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Item Name</TableHead>
+              <TableHead>Quantity</TableHead>
+              <TableHead>Cost Price (R)</TableHead>
+              <TableHead>Selling Price (R)</TableHead>
+              <TableHead>Potential Profit (R)</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {inventoryData.map((item) => (
+              <TableRow key={item.id}>
+                <TableCell className="font-medium">{item.name}</TableCell>
+                <TableCell>{item.quantity}</TableCell>
+                <TableCell>{item.costPrice.toFixed(2)}</TableCell>
+                <TableCell>{item.sellingPrice.toFixed(2)}</TableCell>
+                <TableCell>
+                  {((item.sellingPrice - item.costPrice) * item.quantity).toFixed(2)}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       </Card>
 
       {/* Charts Section */}

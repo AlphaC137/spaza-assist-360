@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -25,6 +25,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/lib/supabase';
+import type { InventoryItem } from '@/types/inventory';
 
 // Mock data for charts
 const monthlyData = [
@@ -36,14 +39,6 @@ const monthlyData = [
   { name: 'Jun', profit: 2390, sales: 3800 },
 ];
 
-interface InventoryItem {
-  id: number;
-  name: string;
-  quantity: number;
-  costPrice: number;
-  sellingPrice: number;
-}
-
 interface InventoryForm {
   itemName: string;
   quantity: number;
@@ -54,35 +49,59 @@ interface InventoryForm {
 const Analytics = () => {
   const { toast } = useToast();
   const { register, handleSubmit, reset } = useForm<InventoryForm>();
-  const [inventoryData, setInventoryData] = useState<InventoryItem[]>([
-    { id: 1, name: "Bread", quantity: 45, costPrice: 15.00, sellingPrice: 18.00 },
-    { id: 2, name: "Milk", quantity: 30, costPrice: 20.00, sellingPrice: 25.00 },
-    { id: 3, name: "Sugar", quantity: 100, costPrice: 18.00, sellingPrice: 22.00 },
-    { id: 4, name: "Rice", quantity: 50, costPrice: 45.00, sellingPrice: 55.00 },
-    { id: 5, name: "Cooking Oil", quantity: 25, costPrice: 35.00, sellingPrice: 42.00 },
-  ]);
+  const queryClient = useQueryClient();
+
+  // Fetch inventory data
+  const { data: inventoryData, isLoading } = useQuery({
+    queryKey: ['inventory'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('inventory')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
+      return data as InventoryItem[];
+    },
+  });
+
+  // Add new inventory item
+  const addInventoryMutation = useMutation({
+    mutationFn: async (newItem: Omit<InventoryItem, 'id' | 'created_at'>) => {
+      const { data, error } = await supabase
+        .from('inventory')
+        .insert([newItem])
+        .select()
+        .single();
+      
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['inventory'] });
+      toast({
+        title: "Success",
+        description: "Item added to inventory",
+      });
+      reset();
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: "Failed to add item to inventory",
+        variant: "destructive",
+      });
+      console.error('Error adding item:', error);
+    },
+  });
 
   const onSubmit = (data: InventoryForm) => {
-    // Create new inventory item
-    const newItem: InventoryItem = {
-      id: inventoryData.length + 1,
+    addInventoryMutation.mutate({
       name: data.itemName,
       quantity: Number(data.quantity),
-      costPrice: Number(data.costPrice),
-      sellingPrice: Number(data.sellPrice),
-    };
-
-    // Add new item to inventory
-    setInventoryData(prev => [...prev, newItem]);
-
-    // Show success toast
-    toast({
-      title: "Inventory Updated",
-      description: `Added ${data.quantity} ${data.itemName}(s) to inventory`,
+      cost_price: Number(data.costPrice),
+      selling_price: Number(data.sellPrice),
     });
-
-    // Reset form
-    reset();
   };
 
   return (
@@ -125,38 +144,48 @@ const Analytics = () => {
               />
             </div>
           </div>
-          <Button type="submit" className="w-full">Add Item</Button>
+          <Button 
+            type="submit" 
+            className="w-full"
+            disabled={addInventoryMutation.isPending}
+          >
+            {addInventoryMutation.isPending ? 'Adding...' : 'Add Item'}
+          </Button>
         </form>
       </Card>
 
       {/* Current Inventory Table */}
       <Card className="p-4">
         <h2 className="text-xl font-semibold mb-4">Current Inventory</h2>
-        <Table>
-          <TableCaption>A list of your current inventory items.</TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Item Name</TableHead>
-              <TableHead>Quantity</TableHead>
-              <TableHead>Cost Price (R)</TableHead>
-              <TableHead>Selling Price (R)</TableHead>
-              <TableHead>Potential Profit (R)</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {inventoryData.map((item) => (
-              <TableRow key={item.id}>
-                <TableCell className="font-medium">{item.name}</TableCell>
-                <TableCell>{item.quantity}</TableCell>
-                <TableCell>{item.costPrice.toFixed(2)}</TableCell>
-                <TableCell>{item.sellingPrice.toFixed(2)}</TableCell>
-                <TableCell>
-                  {((item.sellingPrice - item.costPrice) * item.quantity).toFixed(2)}
-                </TableCell>
+        {isLoading ? (
+          <div>Loading inventory...</div>
+        ) : (
+          <Table>
+            <TableCaption>A list of your current inventory items.</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Item Name</TableHead>
+                <TableHead>Quantity</TableHead>
+                <TableHead>Cost Price (R)</TableHead>
+                <TableHead>Selling Price (R)</TableHead>
+                <TableHead>Potential Profit (R)</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {inventoryData?.map((item) => (
+                <TableRow key={item.id}>
+                  <TableCell className="font-medium">{item.name}</TableCell>
+                  <TableCell>{item.quantity}</TableCell>
+                  <TableCell>{item.cost_price.toFixed(2)}</TableCell>
+                  <TableCell>{item.selling_price.toFixed(2)}</TableCell>
+                  <TableCell>
+                    {((item.selling_price - item.cost_price) * item.quantity).toFixed(2)}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
       </Card>
 
       {/* Charts Section */}

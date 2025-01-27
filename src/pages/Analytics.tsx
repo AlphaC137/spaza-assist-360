@@ -29,7 +29,6 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 import type { InventoryItem } from '@/types/inventory';
 
-// Mock data for charts
 const monthlyData = [
   { name: 'Jan', profit: 4000, sales: 2400 },
   { name: 'Feb', profit: 3000, sales: 1398 },
@@ -51,31 +50,49 @@ const Analytics = () => {
   const { register, handleSubmit, reset } = useForm<InventoryForm>();
   const queryClient = useQueryClient();
 
-  // Fetch inventory data
-  const { data: inventoryData, isLoading } = useQuery({
+  // Fetch inventory data with error handling
+  const { data: inventoryData, isLoading, error } = useQuery({
     queryKey: ['inventory'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('inventory')
-        .select('*')
-        .order('created_at', { ascending: false });
-      
-      if (error) throw error;
-      return data as InventoryItem[];
+      try {
+        const { data, error: supabaseError } = await supabase
+          .from('inventory')
+          .select('*')
+          .order('created_at', { ascending: false });
+        
+        if (supabaseError) {
+          console.error('Supabase error:', supabaseError);
+          throw supabaseError;
+        }
+        
+        return data as InventoryItem[];
+      } catch (err) {
+        console.error('Failed to fetch inventory:', err);
+        throw err;
+      }
     },
   });
 
-  // Add new inventory item
+  // Add new inventory item with error handling
   const addInventoryMutation = useMutation({
     mutationFn: async (newItem: Omit<InventoryItem, 'id' | 'created_at'>) => {
-      const { data, error } = await supabase
-        .from('inventory')
-        .insert([newItem])
-        .select()
-        .single();
-      
-      if (error) throw error;
-      return data;
+      try {
+        const { data, error: supabaseError } = await supabase
+          .from('inventory')
+          .insert([newItem])
+          .select()
+          .single();
+        
+        if (supabaseError) {
+          console.error('Supabase error:', supabaseError);
+          throw supabaseError;
+        }
+        
+        return data;
+      } catch (err) {
+        console.error('Failed to add item:', err);
+        throw err;
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['inventory'] });
@@ -88,7 +105,7 @@ const Analytics = () => {
     onError: (error) => {
       toast({
         title: "Error",
-        description: "Failed to add item to inventory",
+        description: "Failed to add item to inventory. Please try again.",
         variant: "destructive",
       });
       console.error('Error adding item:', error);
@@ -103,6 +120,20 @@ const Analytics = () => {
       selling_price: Number(data.sellPrice),
     });
   };
+
+  // Show error state if there's a problem with the connection
+  if (error) {
+    return (
+      <div className="p-6">
+        <Card className="p-4 bg-red-50">
+          <h2 className="text-lg font-semibold text-red-700">Connection Error</h2>
+          <p className="text-red-600">
+            Failed to connect to the inventory system. Please check your Supabase connection settings.
+          </p>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="p-6 space-y-6">

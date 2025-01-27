@@ -6,6 +6,8 @@ const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseKey) {
   console.error('Missing Supabase credentials. Please add them in the Supabase integration settings.');
+  throw new Error('Supabase credentials are required. Please configure them in the Supabase integration settings.');
 }
 
-export const supabase = createClient(supabaseUrl || '', supabaseKey || '');
+// Only create client if we have valid credentials
+export const supabase = createClient(supabaseUrl, supabaseKey);

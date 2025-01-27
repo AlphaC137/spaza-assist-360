@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -36,14 +36,13 @@ const monthlyData = [
   { name: 'Jun', profit: 2390, sales: 3800 },
 ];
 
-// Mock data for inventory
-const inventoryData = [
-  { id: 1, name: "Bread", quantity: 45, costPrice: 15.00, sellingPrice: 18.00 },
-  { id: 2, name: "Milk", quantity: 30, costPrice: 20.00, sellingPrice: 25.00 },
-  { id: 3, name: "Sugar", quantity: 100, costPrice: 18.00, sellingPrice: 22.00 },
-  { id: 4, name: "Rice", quantity: 50, costPrice: 45.00, sellingPrice: 55.00 },
-  { id: 5, name: "Cooking Oil", quantity: 25, costPrice: 35.00, sellingPrice: 42.00 },
-];
+interface InventoryItem {
+  id: number;
+  name: string;
+  quantity: number;
+  costPrice: number;
+  sellingPrice: number;
+}
 
 interface InventoryForm {
   itemName: string;
@@ -55,13 +54,34 @@ interface InventoryForm {
 const Analytics = () => {
   const { toast } = useToast();
   const { register, handleSubmit, reset } = useForm<InventoryForm>();
+  const [inventoryData, setInventoryData] = useState<InventoryItem[]>([
+    { id: 1, name: "Bread", quantity: 45, costPrice: 15.00, sellingPrice: 18.00 },
+    { id: 2, name: "Milk", quantity: 30, costPrice: 20.00, sellingPrice: 25.00 },
+    { id: 3, name: "Sugar", quantity: 100, costPrice: 18.00, sellingPrice: 22.00 },
+    { id: 4, name: "Rice", quantity: 50, costPrice: 45.00, sellingPrice: 55.00 },
+    { id: 5, name: "Cooking Oil", quantity: 25, costPrice: 35.00, sellingPrice: 42.00 },
+  ]);
 
   const onSubmit = (data: InventoryForm) => {
-    console.log(data);
+    // Create new inventory item
+    const newItem: InventoryItem = {
+      id: inventoryData.length + 1,
+      name: data.itemName,
+      quantity: Number(data.quantity),
+      costPrice: Number(data.costPrice),
+      sellingPrice: Number(data.sellPrice),
+    };
+
+    // Add new item to inventory
+    setInventoryData(prev => [...prev, newItem]);
+
+    // Show success toast
     toast({
       title: "Inventory Updated",
       description: `Added ${data.quantity} ${data.itemName}(s) to inventory`,
     });
+
+    // Reset form
     reset();
   };
 

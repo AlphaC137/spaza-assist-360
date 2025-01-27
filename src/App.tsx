@@ -8,6 +8,7 @@ import { Navigation } from "./components/Navigation";
 import Index from "./pages/Index";
 import Registration from "./pages/Registration";
 import Resources from "./pages/Resources";
+import Analytics from "./pages/Analytics";
 import { LanguageProvider } from "./contexts/LanguageContext";
 
 const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ const App = () => (
                     <Route path="/" element={<Index />} />
                     <Route path="/registration" element={<Registration />} />
                     <Route path="/resources" element={<Resources />} />
+                    <Route path="/analytics" element={<Analytics />} />
                   </Routes>
                 </div>
               </div>

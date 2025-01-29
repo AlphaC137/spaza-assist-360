@@ -7,7 +7,7 @@ import { Header } from "./components/Header";
 import { Navigation } from "./components/Navigation";
 import Index from "./pages/Index";
 import Registration from "./pages/Registration";
-import Resources from "./pages/Resources";
+import DocumentHub from "./pages/DocumentHub";
 import Analytics from "./pages/Analytics";
 import Compliance from "./pages/Compliance";
 import { LanguageProvider } from "./contexts/LanguageContext";
@@ -28,7 +28,7 @@ const App = () => (
                   <Routes>
                     <Route path="/" element={<Index />} />
                     <Route path="/registration" element={<Registration />} />
-                    <Route path="/resources" element={<Resources />} />
+                    <Route path="/document-hub" element={<DocumentHub />} />
                     <Route path="/analytics" element={<Analytics />} />
                     <Route path="/compliance" element={<Compliance />} />
                   </Routes>

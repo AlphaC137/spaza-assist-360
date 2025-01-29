@@ -64,6 +64,31 @@ export const translations = {
     zu: "Landelela ukusebenza kwebhizinisi lakho",
     xh: "Landela ukusebenza kweshishini lakho",
   },
+  documentHub: {
+    en: "Document Hub",
+    zu: "Isikhungo Samadokhumenti",
+    xh: "Iziko Lamaxwebhu",
+  },
+  documentHubDesc: {
+    en: "Secure storage for certificates, IDs, and compliance documents",
+    zu: "Ukugcina okuphephile kwezitifiketi, ama-ID, namadokhumenti okuhambisana",
+    xh: "Ugcino olukhuselekileyo lwezatifikethi, ii-ID, kunye namaxwebhu okuthobela",
+  },
+  uploadDocument: {
+    en: "Upload Document",
+    zu: "Layisha Idokhumenti",
+    xh: "Layisha Uxwebhu",
+  },
+  selectFile: {
+    en: "Select File",
+    zu: "Khetha Ifayela",
+    xh: "Khetha Ifayile",
+  },
+  supportedFormats: {
+    en: "Supported formats: PDF, JPG, PNG (max 10MB)",
+    zu: "Izifomathi ezisekelwayo: PDF, JPG, PNG (max 10MB)",
+    xh: "Iifomathi ezixhaswayo: PDF, JPG, PNG (max 10MB)",
+  },
 };
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {

@@ -25,19 +25,19 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#F97316",
+          DEFAULT: "#8B5CF6", // Vibrant purple
           foreground: "#FFFFFF",
         },
         secondary: {
-          DEFAULT: "#0EA5E9",
+          DEFAULT: "#0EA5E9", // Ocean blue
           foreground: "#FFFFFF",
         },
         accent: {
-          DEFAULT: "#E5DEFF",
+          DEFAULT: "#E5DEFF", // Soft purple
           foreground: "#1a1a1a",
         },
         muted: {
-          DEFAULT: "#FDE1D3",
+          DEFAULT: "#F1F0FB", // Soft gray
           foreground: "#1a1a1a",
         },
       },
@@ -66,7 +66,7 @@ export default {
         fadeIn: "fadeIn 0.5s ease-out",
       },
       backgroundImage: {
-        "gradient-warm": "linear-gradient(90deg, hsla(24, 100%, 83%, 1) 0%, hsla(341, 91%, 68%, 1) 100%)",
+        "gradient-warm": "linear-gradient(90deg, hsla(277, 75%, 84%, 1) 0%, hsla(297, 50%, 51%, 1) 100%)",
       },
     },
   },

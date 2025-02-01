@@ -60,6 +60,33 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          address: string | null
+          business_name: string | null
+          created_at: string
+          id: string
+          owner_name: string | null
+          phone: string | null
+        }
+        Insert: {
+          address?: string | null
+          business_name?: string | null
+          created_at?: string
+          id: string
+          owner_name?: string | null
+          phone?: string | null
+        }
+        Update: {
+          address?: string | null
+          business_name?: string | null
+          created_at?: string
+          id?: string
+          owner_name?: string | null
+          phone?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

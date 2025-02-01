@@ -9,8 +9,8 @@ const Resources = () => {
   const resources = [
     {
       icon: BookOpen,
-      title: "Business Guides",
-      description: "Essential guides for running your spaza shop effectively",
+      title: "Microloan Access",
+      description: "Information about accessing microloans for your spaza shop",
     },
     {
       icon: Video,

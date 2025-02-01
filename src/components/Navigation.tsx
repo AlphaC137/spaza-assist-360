@@ -1,4 +1,4 @@
-import { Home, FileText, CheckSquare, FolderOpen, BarChart } from "lucide-react";
+import { Home, FileText, CheckSquare, FolderOpen, BarChart, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -8,6 +8,7 @@ const navItems = [
   { icon: CheckSquare, label: "Compliance", path: "/compliance" },
   { icon: FolderOpen, label: "Document Hub", path: "/document-hub" },
   { icon: BarChart, label: "Analytics", path: "/analytics" },
+  { icon: BookOpen, label: "Resources", path: "/resources" },
 ];
 
 export function Navigation() {

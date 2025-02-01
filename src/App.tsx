@@ -14,6 +14,7 @@ import Registration from "./pages/Registration";
 import DocumentHub from "./pages/DocumentHub";
 import Analytics from "./pages/Analytics";
 import Compliance from "./pages/Compliance";
+import Resources from "./pages/Resources";
 
 const queryClient = new QueryClient();
 
@@ -68,6 +69,14 @@ const App = () => (
                         element={
                           <ProtectedRoute>
                             <Compliance />
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
+                        path="/resources"
+                        element={
+                          <ProtectedRoute>
+                            <Resources />
                           </ProtectedRoute>
                         }
                       />

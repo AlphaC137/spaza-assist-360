@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const Microloans = () => {
@@ -25,13 +25,14 @@ const Microloans = () => {
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">Available Microloans</h1>
-      {(!microloans || microloans.length === 0) ? (
+      {(!microloans || microloans.length === 0) && (
         <div className="flex justify-center items-center min-h-[200px]">
-          <p className="text-xl text-gray-600 animate-fade-in">
+          <p className="text-xl text-gray-600 animate-fadeIn">
             No available Loans at this time.
           </p>
         </div>
-      ) : (
+      )}
+      {microloans && microloans.length > 0 && (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {microloans.map((loan) => (
             <Card key={loan.id} className="hover:shadow-lg transition-shadow">

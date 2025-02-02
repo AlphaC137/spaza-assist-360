@@ -60,6 +60,36 @@ export type Database = {
         }
         Relationships: []
       }
+      microloans: {
+        Row: {
+          amount_range: string
+          contact_info: string | null
+          created_at: string | null
+          id: number
+          name: string
+          provider: string
+          requirements: string | null
+        }
+        Insert: {
+          amount_range: string
+          contact_info?: string | null
+          created_at?: string | null
+          id?: number
+          name: string
+          provider: string
+          requirements?: string | null
+        }
+        Update: {
+          amount_range?: string
+          contact_info?: string | null
+          created_at?: string | null
+          id?: number
+          name?: string
+          provider?: string
+          requirements?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           address: string | null

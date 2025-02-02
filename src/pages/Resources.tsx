@@ -2,15 +2,18 @@ import { Card } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/contexts/LanguageContext";
 import { BookOpen, Video, FileText } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Resources = () => {
   const { translate } = useLanguage();
+  const navigate = useNavigate();
 
   const resources = [
     {
       icon: BookOpen,
       title: "Microloan Access",
       description: "Information about accessing microloans for your spaza shop",
+      onClick: () => navigate("/microloans"),
     },
     {
       icon: Video,
@@ -31,7 +34,11 @@ const Resources = () => {
         {resources.map((resource) => {
           const Icon = resource.icon;
           return (
-            <Card key={resource.title} className="p-6 hover:shadow-lg transition-shadow cursor-pointer">
+            <Card 
+              key={resource.title} 
+              className="p-6 hover:shadow-lg transition-shadow cursor-pointer"
+              onClick={resource.onClick}
+            >
               <div className="flex items-start gap-4">
                 <div className="p-2 bg-primary/10 rounded-lg">
                   <Icon className="h-6 w-6 text-primary" />

@@ -15,6 +15,7 @@ import DocumentHub from "./pages/DocumentHub";
 import Analytics from "./pages/Analytics";
 import Compliance from "./pages/Compliance";
 import Resources from "./pages/Resources";
+import Microloans from "./pages/Microloans";
 
 const queryClient = new QueryClient();
 
@@ -77,6 +78,14 @@ const App = () => (
                         element={
                           <ProtectedRoute>
                             <Resources />
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
+                        path="/microloans"
+                        element={
+                          <ProtectedRoute>
+                            <Microloans />
                           </ProtectedRoute>
                         }
                       />

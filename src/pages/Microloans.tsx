@@ -25,27 +25,35 @@ const Microloans = () => {
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">Available Microloans</h1>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {microloans?.map((loan) => (
-          <Card key={loan.id} className="hover:shadow-lg transition-shadow">
-            <CardHeader>
-              <CardTitle className="text-xl">{loan.name}</CardTitle>
-              <CardDescription>
-                <div className="space-y-2 mt-2">
-                  <p><span className="font-semibold">Provider:</span> {loan.provider}</p>
-                  <p><span className="font-semibold">Amount Range:</span> {loan.amount_range}</p>
-                  {loan.requirements && (
-                    <p><span className="font-semibold">Requirements:</span> {loan.requirements}</p>
-                  )}
-                  {loan.contact_info && (
-                    <p><span className="font-semibold">Contact:</span> {loan.contact_info}</p>
-                  )}
-                </div>
-              </CardDescription>
-            </CardHeader>
-          </Card>
-        ))}
-      </div>
+      {(!microloans || microloans.length === 0) ? (
+        <div className="flex justify-center items-center min-h-[200px]">
+          <p className="text-xl text-gray-600 animate-fade-in">
+            No available Loans at this time.
+          </p>
+        </div>
+      ) : (
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {microloans.map((loan) => (
+            <Card key={loan.id} className="hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <CardTitle className="text-xl">{loan.name}</CardTitle>
+                <CardDescription>
+                  <div className="space-y-2 mt-2">
+                    <p><span className="font-semibold">Provider:</span> {loan.provider}</p>
+                    <p><span className="font-semibold">Amount Range:</span> {loan.amount_range}</p>
+                    {loan.requirements && (
+                      <p><span className="font-semibold">Requirements:</span> {loan.requirements}</p>
+                    )}
+                    {loan.contact_info && (
+                      <p><span className="font-semibold">Contact:</span> {loan.contact_info}</p>
+                    )}
+                  </div>
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

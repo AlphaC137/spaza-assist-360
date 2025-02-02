@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const Microloans = () => {
@@ -37,19 +37,19 @@ const Microloans = () => {
             <Card key={loan.id} className="hover:shadow-lg transition-shadow">
               <CardHeader>
                 <CardTitle className="text-xl">{loan.name}</CardTitle>
-                <CardDescription>
-                  <div className="space-y-2 mt-2">
-                    <p><span className="font-semibold">Provider:</span> {loan.provider}</p>
-                    <p><span className="font-semibold">Amount Range:</span> {loan.amount_range}</p>
-                    {loan.requirements && (
-                      <p><span className="font-semibold">Requirements:</span> {loan.requirements}</p>
-                    )}
-                    {loan.contact_info && (
-                      <p><span className="font-semibold">Contact:</span> {loan.contact_info}</p>
-                    )}
-                  </div>
-                </CardDescription>
               </CardHeader>
+              <CardContent className="space-y-2">
+                <div className="flex flex-col gap-2">
+                  <div><span className="font-semibold">Provider:</span> {loan.provider}</div>
+                  <div><span className="font-semibold">Amount Range:</span> {loan.amount_range}</div>
+                  {loan.requirements && (
+                    <div><span className="font-semibold">Requirements:</span> {loan.requirements}</div>
+                  )}
+                  {loan.contact_info && (
+                    <div><span className="font-semibold">Contact:</span> {loan.contact_info}</div>
+                  )}
+                </div>
+              </CardContent>
             </Card>
           ))}
         </div>

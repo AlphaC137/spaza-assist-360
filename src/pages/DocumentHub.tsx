@@ -30,7 +30,7 @@ const DocumentHub = () => {
 
   // Delete document mutation
   const deleteDocument = useMutation({
-    mutationFn: async (id: string) => {
+    mutationFn: async (id: number) => {
       const { error } = await supabase
         .from('documents')
         .delete()
@@ -169,7 +169,7 @@ const DocumentHub = () => {
                     variant="outline"
                     size="icon"
                     className="text-red-500 hover:text-red-600"
-                    onClick={() => deleteDocument.mutate(doc.id)}
+                    onClick={() => deleteDocument.mutate(Number(doc.id))}
                   >
                     <Trash2 className="w-4 h-4" />
                   </Button>

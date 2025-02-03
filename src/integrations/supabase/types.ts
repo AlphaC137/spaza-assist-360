@@ -9,7 +9,7 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      doccuments: {
+      documents: {
         Row: {
           created_at: string
           file_path: string | null

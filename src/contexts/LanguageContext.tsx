@@ -89,6 +89,87 @@ export const translations = {
     zu: "Izifomathi ezisekelwayo: PDF, JPG, PNG (max 10MB)",
     xh: "Iifomathi ezixhaswayo: PDF, JPG, PNG (max 10MB)",
   },
+
+  // Header translations
+  appName: {
+    en: "Spaza Connect",
+    zu: "I-Spaza Connect",
+    xh: "I-Spaza Connect",
+  },
+  signOut: {
+    en: "Sign Out",
+    zu: "Phuma",
+    xh: "Phuma",
+  },
+
+  // Auth page translations
+  createAccount: {
+    en: "Create an Account",
+    zu: "Dala i-akhawunti",
+    xh: "Yenza i-akhawunti",
+  },
+  welcomeBack: {
+    en: "Welcome Back",
+    zu: "Wamukelekile Futhi",
+    xh: "Wamkelekile Kwakhona",
+  },
+  signUpDesc: {
+    en: "Sign up to start managing your business",
+    zu: "Bhalisela ukuqala ukulawula ibhizinisi lakho",
+    xh: "Bhalisela ukuqalisa ukulawula ishishini lakho",
+  },
+  signInDesc: {
+    en: "Sign in to continue to your account",
+    zu: "Ngena ukuze uqhubeke ne-akhawunti yakho",
+    xh: "Ngena ukuze uqhubeke kwi-akhawunti yakho",
+  },
+  email: {
+    en: "Email",
+    zu: "I-imeyili",
+    xh: "I-imeyili",
+  },
+  password: {
+    en: "Password",
+    zu: "Iphasiwedi",
+    xh: "Iphasiwedi",
+  },
+  loading: {
+    en: "Loading...",
+    zu: "Iyalayisha...",
+    xh: "Iyalayisha...",
+  },
+  signIn: {
+    en: "Sign In",
+    zu: "Ngena",
+    xh: "Ngena",
+  },
+  signUp: {
+    en: "Sign Up",
+    zu: "Bhalisela",
+    xh: "Bhalisela",
+  },
+  haveAccount: {
+    en: "Already have an account? Sign In",
+    zu: "Usuvele unayo i-akhawunti? Ngena",
+    xh: "Sele unayo i-akhawunti? Ngena",
+  },
+  noAccount: {
+    en: "Don't have an account? Sign Up",
+    zu: "Awunayo i-akhawunti? Bhalisela",
+    xh: "Akunayo i-akhawunti? Bhalisela",
+  },
+
+  // Microloans page translations
+  availableMicroloans: {
+    en: "Available Microloans",
+    zu: "Izimalimboleko Ezitholakalayo",
+    xh: "Iimali-mboleko Ezifumanekayo",
+  },
+  noLoans: {
+    en: "No available Loans at this time.",
+    zu: "Azikho izimalimboleko ezitholakalayo okwamanje.",
+    xh: "Akukho mali-mboleko zifumanekayo ngalo maxesha.",
+  },
 };
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {

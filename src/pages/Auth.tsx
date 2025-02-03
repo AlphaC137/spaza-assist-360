@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/contexts/LanguageContext";
 
 export default function Auth() {
   const [email, setEmail] = useState("");
@@ -13,6 +15,7 @@ export default function Auth() {
   const [isSignUp, setIsSignUp] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { translate } = useLanguage();
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,12 +56,10 @@ export default function Auth() {
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">
-            {isSignUp ? "Create an Account" : "Welcome Back"}
+            {translate(isSignUp ? translations.createAccount : translations.welcomeBack)}
           </CardTitle>
           <CardDescription className="text-center">
-            {isSignUp
-              ? "Sign up to start managing your business"
-              : "Sign in to continue to your account"}
+            {translate(isSignUp ? translations.signUpDesc : translations.signInDesc)}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -66,7 +67,7 @@ export default function Auth() {
             <div className="space-y-2">
               <Input
                 type="email"
-                placeholder="Email"
+                placeholder={translate(translations.email)}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -76,7 +77,7 @@ export default function Auth() {
             <div className="space-y-2">
               <Input
                 type="password"
-                placeholder="Password"
+                placeholder={translate(translations.password)}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -84,7 +85,7 @@ export default function Auth() {
               />
             </div>
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Loading..." : isSignUp ? "Sign Up" : "Sign In"}
+              {loading ? translate(translations.loading) : translate(isSignUp ? translations.signUp : translations.signIn)}
             </Button>
             <div className="text-center">
               <Button
@@ -93,9 +94,7 @@ export default function Auth() {
                 className="text-sm text-white hover:text-white/80"
                 onClick={() => setIsSignUp(!isSignUp)}
               >
-                {isSignUp
-                  ? "Already have an account? Sign In"
-                  : "Don't have an account? Sign Up"}
+                {translate(isSignUp ? translations.haveAccount : translations.noAccount)}
               </Button>
             </div>
           </form>

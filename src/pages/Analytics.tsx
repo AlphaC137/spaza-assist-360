@@ -28,6 +28,7 @@ import {
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import type { InventoryItem } from '@/types/inventory';
+import { VoiceCashFlow } from '@/components/VoiceCashFlow';
 
 // Mock data for charts
 const monthlyData = [
@@ -190,6 +191,8 @@ const Analytics = () => {
 
       {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <VoiceCashFlow />
+        
         <Card className="p-4">
           <h2 className="text-xl font-semibold mb-4">Monthly Profit Overview</h2>
           <ChartContainer config={{}} className="h-[300px]">

@@ -10,15 +10,16 @@ const Resources = () => {
 
   const resources = [
     {
+      icon: Video,
+      title: "Debt Tracking",
+      description: "Track customer credit and manage payment reminders",
+      onClick: () => navigate("/debt-tracking"),
+    },
+    {
       icon: BookOpen,
       title: "Microloan Access",
       description: "Information about accessing microloans for your spaza shop",
       onClick: () => navigate("/microloans"),
-    },
-    {
-      icon: Video,
-      title: "Training Videos",
-      description: "Step-by-step video tutorials on business management",
     },
     {
       icon: FileText,

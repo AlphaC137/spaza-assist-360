@@ -1,83 +1,70 @@
-import React from 'react';
-import { Card } from "@/components/ui/card";
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { useQuery } from '@tanstack/react-query';
+import { useQuery } from "@tanstack/react-query";
+import { useLanguage, translations } from "@/contexts/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
-import { Bell, DollarSign } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { format } from "date-fns";
+import { AlertTriangle } from "lucide-react";
 
 const DebtTracking = () => {
-  // Mock data for demonstration - replace with actual data from Supabase
-  const debtors = [
-    {
-      id: 1,
-      name: "Sipho",
-      amount: 200,
-      dueDate: "Friday",
-      status: "pending"
+  const { translate } = useLanguage();
+
+  const { data: debtors, isLoading } = useQuery({
+    queryKey: ['debtors'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('debtors')
+        .select('*')
+        .order('due_date', { ascending: true });
+      
+      if (error) throw error;
+      return data;
     },
-    {
-      id: 2,
-      name: "Themba",
-      amount: 150,
-      dueDate: "Monday",
-      status: "overdue"
-    }
-  ];
+  });
+
+  if (isLoading) {
+    return <div className="p-6">{translate(translations.loading)}</div>;
+  }
+
+  const isOverdue = (dueDate: string) => {
+    return new Date(dueDate) < new Date();
+  };
 
   return (
-    <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold mb-6">Customer Credit Management</h1>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-        <Card className="p-4 bg-yellow-50">
-          <div className="flex items-center gap-3">
-            <Bell className="h-5 w-5 text-yellow-600" />
-            <h3 className="font-semibold text-yellow-800">Risk Alerts</h3>
-          </div>
-          <p className="mt-2 text-sm text-yellow-700">
-            2 customers have overdue payments
-          </p>
-        </Card>
-        
-        <Card className="p-4 bg-blue-50">
-          <div className="flex items-center gap-3">
-            <DollarSign className="h-5 w-5 text-blue-600" />
-            <h3 className="font-semibold text-blue-800">Total Outstanding</h3>
-          </div>
-          <p className="mt-2 text-sm text-blue-700">
-            R350 in pending payments
-          </p>
-        </Card>
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-6">Customer Credit Log</h1>
+      <div className="grid gap-4">
+        {debtors?.map((debtor) => (
+          <Card key={debtor.id} className="p-4">
+            <div className="flex justify-between items-start">
+              <div>
+                <h3 className="font-semibold">{debtor.customer_name}</h3>
+                <p className="text-sm text-gray-600">
+                  Due: {format(new Date(debtor.due_date), 'PPP')}
+                </p>
+              </div>
+              <div className="flex flex-col items-end gap-2">
+                <p className="font-bold">R{debtor.amount}</p>
+                <Badge 
+                  variant={isOverdue(debtor.due_date) ? "destructive" : "secondary"}
+                >
+                  {isOverdue(debtor.due_date) ? (
+                    <div className="flex items-center gap-1">
+                      <AlertTriangle className="h-4 w-4" />
+                      Overdue
+                    </div>
+                  ) : (
+                    'Pending'
+                  )}
+                </Badge>
+              </div>
+            </div>
+          </Card>
+        ))}
+        {debtors?.length === 0 && (
+          <p className="text-center text-gray-600">No debt records found.</p>
+        )}
       </div>
-
-      <Card className="p-4">
-        <h2 className="text-xl font-semibold mb-4">Customer Credit Log</h2>
-        <Table>
-          <TableCaption>List of customers with outstanding payments</TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Customer</TableHead>
-              <TableHead>Amount (R)</TableHead>
-              <TableHead>Due Date</TableHead>
-              <TableHead>Status</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {debtors.map((debtor) => (
-              <TableRow key={debtor.id} className={debtor.status === 'overdue' ? 'bg-red-50' : ''}>
-                <TableCell className="font-medium">{debtor.name}</TableCell>
-                <TableCell>R{debtor.amount}</TableCell>
-                <TableCell>{debtor.dueDate}</TableCell>
-                <TableCell className={`capitalize ${
-                  debtor.status === 'overdue' ? 'text-red-600 font-medium' : ''
-                }`}>
-                  {debtor.status}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Card>
     </div>
   );
 };

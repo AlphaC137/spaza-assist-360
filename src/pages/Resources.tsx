@@ -1,6 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { useLanguage } from "@/contexts/LanguageContext";
-import { translations } from "@/contexts/LanguageContext";
+import { useLanguage, translations } from "@/contexts/LanguageContext";
 import { BookOpen, Video, FileText } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 

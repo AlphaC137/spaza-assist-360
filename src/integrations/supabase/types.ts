@@ -27,6 +27,36 @@ export type Database = {
         }
         Relationships: []
       }
+      debtors: {
+        Row: {
+          amount: number
+          created_at: string
+          customer_name: string
+          due_date: string
+          id: number
+          status: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          customer_name: string
+          due_date: string
+          id?: number
+          status?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          customer_name?: string
+          due_date?: string
+          id?: number
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       documents: {
         Row: {
           created_at: string

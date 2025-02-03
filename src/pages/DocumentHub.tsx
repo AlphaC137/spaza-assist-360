@@ -3,16 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLanguage, translations } from "@/contexts/LanguageContext";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client"; // Updated import
+import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import type { Database } from "@/integrations/supabase/types";
 
-interface Document {
-  id: string;
-  name: string;
-  type: string;
-  created_at: string;
-  file_path: string;
-}
+type Document = Database['public']['Tables']['documents']['Row'];
 
 const DocumentHub = () => {
   const { translate } = useLanguage();

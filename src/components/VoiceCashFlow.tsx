@@ -42,13 +42,12 @@ export const VoiceCashFlow = () => {
             
             const { text } = await response.json();
             
-            // Store the transcription
             const { error } = await supabase
               .from('cash_flow_notes')
-              .insert([{ 
+              .insert({
                 transcription: text,
                 created_at: new Date().toISOString()
-              }]);
+              });
 
             if (error) throw error;
 

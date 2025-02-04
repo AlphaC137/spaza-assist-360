@@ -1,13 +1,14 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { Session } from "@supabase/supabase-js";
+import { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 
 type AuthContextType = {
   session: Session | null;
+  user: User | null;
   loading: boolean;
 };
 
-const AuthContext = createContext<AuthContextType>({ session: null, loading: true });
+const AuthContext = createContext<AuthContextType>({ session: null, user: null, loading: true });
 
 export const useAuth = () => useContext(AuthContext);
 
@@ -34,7 +35,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ session, loading }}>
+    <AuthContext.Provider value={{ session, user: session?.user ?? null, loading }}>
       {children}
     </AuthContext.Provider>
   );

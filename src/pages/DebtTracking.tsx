@@ -20,13 +20,15 @@ const debtorSchema = z.object({
   due_date: z.string().min(1, "Due date is required"),
 });
 
+type DebtorFormValues = z.infer<typeof debtorSchema>;
+
 const DebtTracking = () => {
   const { translate } = useLanguage();
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const { user } = useAuth();
 
-  const form = useForm({
+  const form = useForm<DebtorFormValues>({
     resolver: zodResolver(debtorSchema),
     defaultValues: {
       customer_name: "",
@@ -49,16 +51,18 @@ const DebtTracking = () => {
   });
 
   const addDebtorMutation = useMutation({
-    mutationFn: async (values: z.infer<typeof debtorSchema>) => {
+    mutationFn: async (values: DebtorFormValues) => {
+      if (!user?.id) throw new Error("User not authenticated");
+      
       const { error } = await supabase
         .from('debtors')
-        .insert([
-          {
-            ...values,
-            user_id: user?.id,
-            status: 'pending'
-          }
-        ]);
+        .insert({
+          customer_name: values.customer_name,
+          amount: values.amount,
+          due_date: values.due_date,
+          user_id: user.id,
+          status: 'pending'
+        });
       
       if (error) throw error;
     },
@@ -80,7 +84,7 @@ const DebtTracking = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof debtorSchema>) => {
+  const onSubmit = (values: DebtorFormValues) => {
     addDebtorMutation.mutate(values);
   };
 

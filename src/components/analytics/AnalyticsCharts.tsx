@@ -27,7 +27,7 @@ const monthlyData = [
 
 interface ChartCardProps {
   title: string;
-  children: React.ReactNode;
+  children: React.ReactElement;
   isLoading?: boolean;
 }
 

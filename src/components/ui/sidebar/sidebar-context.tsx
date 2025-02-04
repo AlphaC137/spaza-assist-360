@@ -24,5 +24,10 @@ export function useSidebar() {
   return context
 }
 
-export { SidebarContext, SIDEBAR_COOKIE_NAME, SIDEBAR_COOKIE_MAX_AGE, SIDEBAR_KEYBOARD_SHORTCUT }
+export { 
+  SidebarContext, 
+  SIDEBAR_COOKIE_NAME, 
+  SIDEBAR_COOKIE_MAX_AGE, 
+  SIDEBAR_KEYBOARD_SHORTCUT 
+}
 export type { SidebarContext as SidebarContextType }

@@ -6,7 +6,8 @@ import {
   SidebarContext, 
   SIDEBAR_COOKIE_NAME, 
   SIDEBAR_COOKIE_MAX_AGE, 
-  SIDEBAR_KEYBOARD_SHORTCUT 
+  SIDEBAR_KEYBOARD_SHORTCUT,
+  SidebarContextType
 } from "./sidebar-context"
 
 const SIDEBAR_WIDTH = "16rem"
@@ -72,9 +73,9 @@ export const SidebarProvider = React.forwardRef<
       return () => window.removeEventListener("keydown", handleKeyDown)
     }, [toggleSidebar])
 
-    const state = open ? "expanded" : "collapsed"
+    const state = open ? "expanded" : "collapsed" as const
 
-    const contextValue = React.useMemo(
+    const contextValue = React.useMemo<SidebarContextType>(
       () => ({
         state,
         open,

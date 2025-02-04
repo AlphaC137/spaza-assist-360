@@ -1,9 +1,15 @@
+import * as React from "react"
 import { PanelLeft } from "lucide-react"
 import { Sheet, SheetContent } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { useSidebar } from "./sidebar-context"
-import { SidebarProvider, SIDEBAR_WIDTH, SIDEBAR_WIDTH_MOBILE, SIDEBAR_WIDTH_ICON } from "./sidebar-provider"
+import { 
+  SidebarProvider, 
+  SIDEBAR_WIDTH, 
+  SIDEBAR_WIDTH_MOBILE, 
+  SIDEBAR_WIDTH_ICON 
+} from "./sidebar-provider"
 import {
   SidebarInput,
   SidebarHeader,

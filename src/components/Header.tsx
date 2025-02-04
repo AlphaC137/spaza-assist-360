@@ -19,9 +19,13 @@ export function Header() {
   return (
     <header className="border-b bg-white">
       <div className="max-w-screen-xl mx-auto p-4 flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-primary">
-          {translate(translations.appName)}
-        </h1>
+        <div className="flex items-center">
+          <img 
+            src="/lovable-uploads/b3abc844-3cc7-49da-8d78-5490099104cf.png" 
+            alt="Spaza Conecta Logo" 
+            className="h-10 object-contain"
+          />
+        </div>
         <div className="flex items-center gap-4">
           <LanguageSelector />
           {session && (

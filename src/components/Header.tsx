@@ -21,7 +21,7 @@ export function Header() {
       <div className="max-w-screen-xl mx-auto p-4 flex justify-between items-center">
         <div className="flex items-center">
           <img 
-            src="/lovable-uploads/b3abc844-3cc7-49da-8d78-5490099104cf.png" 
+            src="/lovable-uploads/741151a7-8521-4aa6-9347-ce6fdd93b1b1.png" 
             alt="Spaza Conecta Logo" 
             className="h-10 object-contain"
           />

@@ -16,7 +16,7 @@ import { useAuth } from "@/contexts/AuthContext";
 
 const debtorSchema = z.object({
   customer_name: z.string().min(1, "Customer name is required"),
-  amount: z.string().transform((val) => Number(val)),
+  amount: z.coerce.number().positive("Amount must be greater than 0"),
   due_date: z.string().min(1, "Due date is required"),
 });
 
@@ -32,7 +32,7 @@ const DebtTracking = () => {
     resolver: zodResolver(debtorSchema),
     defaultValues: {
       customer_name: "",
-      amount: "",
+      amount: 0,
       due_date: "",
     },
   });
@@ -128,6 +128,7 @@ const DebtTracking = () => {
                         type="number" 
                         placeholder="Enter amount" 
                         {...field}
+                        onChange={(e) => field.onChange(e.target.valueAsNumber)}
                       />
                     </FormControl>
                     <FormMessage />

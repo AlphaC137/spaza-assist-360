@@ -16,7 +16,7 @@ import { useAuth } from "@/contexts/AuthContext";
 
 const debtorSchema = z.object({
   customer_name: z.string().min(1, "Customer name is required"),
-  amount: z.string().transform((val) => parseFloat(val)),
+  amount: z.string().transform((val) => Number(val)),
   due_date: z.string().min(1, "Due date is required"),
 });
 

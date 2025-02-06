@@ -16,7 +16,7 @@ export function Navigation() {
   const location = useLocation();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t md:relative md:border-t-0 p-2 md:p-4">
+    <nav className="fixed bottom-0 left-0 right-0 md:relative bg-[#1A1F2C]/80 backdrop-blur-lg border-t border-white/10 md:border-t-0 p-2 md:p-4 shadow-lg">
       <div className="flex justify-around md:flex-col md:gap-2 max-w-screen-xl mx-auto">
         {navItems.map((item) => {
           const Icon = item.icon;
@@ -26,7 +26,11 @@ export function Navigation() {
             <Button
               key={item.path}
               variant={isActive ? "default" : "ghost"}
-              className={`flex flex-col md:flex-row md:justify-start gap-1 h-auto py-2 ${item.className}`}
+              className={`flex flex-col md:flex-row md:justify-start gap-1 h-auto py-2 
+                ${isActive 
+                  ? 'bg-primary text-primary-foreground hover:bg-secondary transition-colors' 
+                  : 'text-white/70 hover:text-white hover:bg-white/10'} 
+                ${item.className}`}
               onClick={() => navigate(item.path)}
             >
               <Icon className="h-5 w-5" />

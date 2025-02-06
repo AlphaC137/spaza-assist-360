@@ -11,8 +11,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { useLanguage, translations } from "@/contexts/LanguageContext";
+import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 const formSchema = z.object({
   businessName: z.string().min(2, {
@@ -35,6 +37,7 @@ const formSchema = z.object({
 export default function Registration() {
   const { toast } = useToast();
   const { translate } = useLanguage();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -47,13 +50,35 @@ export default function Registration() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Here you would typically send the data to your backend
-    console.log(values);
-    toast({
-      title: "Registration submitted",
-      description: "We will contact you soon!",
-    });
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsSubmitting(true);
+    try {
+      const { data: functionData, error: functionError } = await supabase.functions.invoke(
+        'send-registration',
+        {
+          body: values,
+        }
+      );
+
+      if (functionError) throw functionError;
+
+      toast({
+        title: "Request Submitted Successfully",
+        description: "Please check your email for updates on your registration request.",
+      });
+
+      // Reset the form
+      form.reset();
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: "There was an error submitting your request. Please try again.",
+        variant: "destructive",
+      });
+      console.error("Registration error:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -127,7 +152,13 @@ export default function Registration() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full">Submit Registration</Button>
+            <Button 
+              type="submit" 
+              className="w-full"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Submitting..." : "Submit Request"}
+            </Button>
           </form>
         </Form>
       </div>

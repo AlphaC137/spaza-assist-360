@@ -3,12 +3,12 @@ import { Button } from "@/components/ui/button";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const navItems = [
-  { icon: Home, label: "Home", path: "/" },
-  { icon: FileText, label: "Registration", path: "/registration" },
-  { icon: CheckSquare, label: "Compliance", path: "/compliance" },
-  { icon: FolderOpen, label: "Document Hub", path: "/document-hub" },
-  { icon: BarChart, label: "Analytics", path: "/analytics" },
-  { icon: BookOpen, label: "Resources", path: "/resources" },
+  { icon: Home, label: "Home", path: "/", className: "nav-home" },
+  { icon: FileText, label: "Registration", path: "/registration", className: "nav-registration" },
+  { icon: CheckSquare, label: "Compliance", path: "/compliance", className: "nav-compliance" },
+  { icon: FolderOpen, label: "Document Hub", path: "/document-hub", className: "nav-document-hub" },
+  { icon: BarChart, label: "Analytics", path: "/analytics", className: "nav-analytics" },
+  { icon: BookOpen, label: "Resources", path: "/resources", className: "nav-resources" },
 ];
 
 export function Navigation() {
@@ -26,7 +26,7 @@ export function Navigation() {
             <Button
               key={item.path}
               variant={isActive ? "default" : "ghost"}
-              className="flex flex-col md:flex-row md:justify-start gap-1 h-auto py-2"
+              className={`flex flex-col md:flex-row md:justify-start gap-1 h-auto py-2 ${item.className}`}
               onClick={() => navigate(item.path)}
             >
               <Icon className="h-5 w-5" />

@@ -4,6 +4,7 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { Header } from "@/components/Header";
 import { Navigation } from "@/components/Navigation";
+import { OnboardingTour } from "@/components/OnboardingTour";
 import Index from "@/pages/Index";
 import Registration from "@/pages/Registration";
 import Compliance from "@/pages/Compliance";
@@ -24,6 +25,7 @@ function App() {
         <LanguageProvider>
           <AuthProvider>
             <div className="min-h-screen">
+              <OnboardingTour />
               <Header />
               <div className="flex">
                 <Navigation />

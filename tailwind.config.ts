@@ -25,19 +25,19 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#d395ff",
+          DEFAULT: "#9b87f5",
           foreground: "#FFFFFF",
         },
         secondary: {
-          DEFAULT: "#ff6105",
+          DEFAULT: "#7E69AB",
           foreground: "#FFFFFF",
         },
         accent: {
-          DEFAULT: "#ffdee2",
+          DEFAULT: "#F2FCE2",
           foreground: "#1a1a1a",
         },
         muted: {
-          DEFAULT: "#F1F0FB",
+          DEFAULT: "#E6E9F0",
           foreground: "#1a1a1a",
         },
       },
@@ -66,7 +66,7 @@ export default {
         fadeIn: "fadeIn 0.5s ease-out",
       },
       backgroundImage: {
-        "gradient-warm": "linear-gradient(90deg, #d395ff 0%, #ff6105 100%)",
+        "gradient-warm": "linear-gradient(102.3deg, rgba(147,39,143,1) 5.9%, rgba(234,172,232,1) 64%, rgba(246,219,245,1) 89%)",
       },
     },
   },

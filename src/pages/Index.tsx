@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
-import { FileText, CheckSquare, BookOpen, BarChart } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { FileText, CheckSquare, BookOpen, BarChart, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/contexts/LanguageContext";
@@ -37,32 +38,44 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-warm animate-fadeIn">
-      <div className="max-w-screen-xl mx-auto p-4 pt-8">
-        <h1 className="text-3xl md:text-4xl font-bold text-white text-center mb-4">
-          {translate(translations.welcome)}
-        </h1>
-        <p className="text-white text-center mb-8">
-          {translate(translations.subtitle)}
-        </p>
+      <div className="max-w-screen-xl mx-auto p-4 pt-16 md:pt-24">
+        {/* Hero Section */}
+        <div className="text-center mb-16">
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
+            {translate(translations.welcome)}
+          </h1>
+          <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto">
+            {translate(translations.subtitle)}
+          </p>
+          <Button 
+            size="lg" 
+            className="bg-white text-primary hover:bg-white/90 transition-all"
+            onClick={() => navigate("/registration")}
+          >
+            Get Started
+            <ArrowRight className="ml-2 h-5 w-5" />
+          </Button>
+        </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Features Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
           {features.map((feature) => {
             const Icon = feature.icon;
             return (
               <Card
                 key={feature.titleKey}
-                className="p-6 cursor-pointer hover:shadow-lg transition-shadow"
+                className="p-8 cursor-pointer hover:shadow-lg transition-all duration-300 bg-white/95 backdrop-blur-sm"
                 onClick={() => navigate(feature.path)}
               >
-                <div className="flex items-start gap-4">
-                  <div className="p-2 bg-accent rounded-lg">
-                    <Icon className="h-6 w-6 text-primary" />
+                <div className="flex items-start gap-6">
+                  <div className="p-3 bg-accent rounded-xl">
+                    <Icon className="h-8 w-8 text-primary" />
                   </div>
                   <div>
-                    <h2 className="text-xl font-semibold mb-2">
+                    <h2 className="text-2xl font-semibold mb-3 text-gray-800">
                       {translate(translations[feature.titleKey])}
                     </h2>
-                    <p className="text-gray-600">
+                    <p className="text-gray-600 text-lg leading-relaxed">
                       {translate(translations[feature.descriptionKey])}
                     </p>
                   </div>
@@ -70,6 +83,27 @@ const Index = () => {
               </Card>
             );
           })}
+        </div>
+
+        {/* Trust Indicators */}
+        <div className="mt-20 text-center text-white">
+          <h3 className="text-2xl md:text-3xl font-semibold mb-8">
+            Trusted by Spaza Shop Owners Across South Africa
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="p-6 rounded-lg bg-white/10 backdrop-blur-sm">
+              <p className="text-4xl font-bold mb-2">100+</p>
+              <p className="text-lg">Active Users</p>
+            </div>
+            <div className="p-6 rounded-lg bg-white/10 backdrop-blur-sm">
+              <p className="text-4xl font-bold mb-2">3</p>
+              <p className="text-lg">Supported Languages</p>
+            </div>
+            <div className="p-6 rounded-lg bg-white/10 backdrop-blur-sm">
+              <p className="text-4xl font-bold mb-2">24/7</p>
+              <p className="text-lg">Business Support</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

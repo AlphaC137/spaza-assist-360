@@ -1,3 +1,4 @@
+
 import { Check } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -21,9 +22,9 @@ const Compliance = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="text-2xl md:text-3xl font-semibold text-gray-800 text-center"
+        className="text-2xl md:text-3xl font-semibold text-white text-center"
       >
-        All is looking well for now
+        Looking Good!
       </motion.h1>
     </div>
   );

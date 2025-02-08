@@ -1,3 +1,4 @@
+
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { LanguageSelector } from "./LanguageSelector";
@@ -22,11 +23,11 @@ export function Header() {
         <div className="flex items-center">
           <img 
             src="/lovable-uploads/741151a7-8521-4aa6-9347-ce6fdd93b1b1.png" 
-            alt="Spaza Conecta Logo" 
-            className="h-10 object-contain"
+            alt="Spaza Connect Logo" 
+            className="h-10 w-auto object-contain block"
           />
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 flex-wrap justify-end">
           <LanguageSelector />
           {session && (
             <Button variant="outline" onClick={handleSignOut}>
